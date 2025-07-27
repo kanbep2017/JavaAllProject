@@ -6,14 +6,25 @@ on:
       - main
 
 jobs:
-  build:
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Discord
+      - name: Check commit message and notify if contains keywords
         run: |
-          curl -H "Content-Type: application/json" \
-          -X POST \
-          -d '{
-            "content": "リポジトリを更新しました！\nGitHubリポジトリ: https://github.com/kanbep2017/JavaAllProject"
-          }' \
-          ${{ secrets.DISCORD_WEBHOOK_URL }}
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          echo "コミットメッセージ: $COMMIT_MSG"
+
+          # 「アウトプット」または「成果」が含まれているかをチェック
+          echo "$COMMIT_MSG" | grep -E "アウトプット|成果" > /dev/null
+
+          if [ $? -eq 0 ]; then
+            echo "条件に一致したためDiscordに通知します。"
+            curl -H "Content-Type: application/json" \
+              -X POST \
+              -d "{
+                \"content\": \"✅ コミット通知！\n👤 ユーザー: ${{ github.actor }}\n📝 メッセージ: $COMMIT_MSG\n🔗 https://github.com/${{ github.repository }}/commits/main\"
+              }" \
+              ${{ secrets.DISCORD_WEBHOOK_URL }}
+          else
+            echo "『アウトプット』『成果』のいずれも含まれていなかったため通知はスキップしました。"
+          fi
