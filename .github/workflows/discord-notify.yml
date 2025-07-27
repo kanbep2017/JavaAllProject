@@ -14,6 +14,6 @@ jobs:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d '{
-            "content": "ビルドが完了しました！\nGitHubリポジトリ: https://github.com/kanbep2017/JavaAllProject"
+            "content": "リポジトリを更新しました！\nGitHubリポジトリ: https://github.com/kanbep2017/JavaAllProject"
           }' \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
