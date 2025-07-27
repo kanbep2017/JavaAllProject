@@ -1,4 +1,4 @@
-name: Discord Status Notification
+name: Discord Keyword Notify
 
 on:
   push:
@@ -8,23 +8,23 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
+    # コミットメッセージに「アウトプット」または「成果」が含まれているか
+    if: >-
+      ${{ github.event.head_commit.message && (
+        contains(github.event.head_commit.message, 'アウトプット') ||
+        contains(github.event.head_commit.message, '成果')
+      ) }}
+
     steps:
-      - name: Check commit message and notify if contains keywords
+      - name: Notify Discord
         run: |
           COMMIT_MSG="${{ github.event.head_commit.message }}"
-          echo "コミットメッセージ: $COMMIT_MSG"
+          echo "✅ 条件に一致したコミットを検出しました: $COMMIT_MSG"
 
-          # 「アウトプット」または「成果」が含まれているかをチェック
-          echo "$COMMIT_MSG" | grep -E "アウトプット|成果" > /dev/null
-
-          if [ $? -eq 0 ]; then
-            echo "条件に一致したためDiscordに通知します。"
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{
-                \"content\": \"✅ コミット通知！\n👤 ユーザー: ${{ github.actor }}\n📝 メッセージ: $COMMIT_MSG\n🔗 https://github.com/${{ github.repository }}/commits/main\"
-              }" \
-              ${{ secrets.DISCORD_WEBHOOK_URL }}
-          else
-            echo "『アウトプット』『成果』のいずれも含まれていなかったため通知はスキップしました。"
-          fi
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{
+              \"content\": \"📣 成果物（アウトプット）のコミットがありました！\n👤 ユーザー: ${{ github.actor }}\n📝 メッセージ: $COMMIT_MSG\n🔗 https://github.com/${{ github.repository }}/commits/main\"
+            }" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
