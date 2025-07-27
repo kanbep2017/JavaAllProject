@@ -1,6 +1,6 @@
     # 終了後に discordのwebhookで通知を行う
     - name: Notify Discord
-      run: |
+      run:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d '{
