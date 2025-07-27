@@ -1,6 +1,16 @@
-    # 終了後に discordのwebhookで通知を行う
-    - name: Notify Discord
-      run:
+name: Discord Status Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord
+        run: |
           curl -H "Content-Type: application/json" \
           -X POST \
           -d '{
