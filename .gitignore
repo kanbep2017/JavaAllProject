@@ -1,7 +1,7 @@
 /.metadata/
-exercise/bin/.gitignore
+exercise/bin/
 .gitignore
-JavaSilverDrill/bin/.gitignore
-LambdaSample/bin/.gitignore
-Sample/bin/.gitignore
-SampleMVC/build/classes/.gitignore
+JavaSilverDrill/bin/
+LambdaSample/bin/
+Sample/bin/
+SampleMVC/build/classes/
