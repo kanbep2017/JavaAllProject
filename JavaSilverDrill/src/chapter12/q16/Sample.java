@@ -1,4 +1,4 @@
-package chapter10.q16;
+package chapter12.q16;
 
 import static java.time.DayOfWeek.*;
 
