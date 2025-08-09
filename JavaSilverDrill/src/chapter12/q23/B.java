@@ -10,7 +10,7 @@ public class B extends A {
 		System.out.println("B");
 	}
 
-	public void Sample(List arg) {
+	public void sample(List arg) {
 		System.out.println("C");
 	}
 

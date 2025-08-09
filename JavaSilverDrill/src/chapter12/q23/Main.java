@@ -13,12 +13,12 @@ public class Main {
 		List<String> list = new ArrayList<>();
 
 		// do something
-		// 選択肢A: 変数も中身もAなのでAのsampleが呼ばれる
+		// 選択肢A: 変数も中身もAなのでAのsample(Collection)が呼ばれる
 		a1.sample(list); // 出力: A
-		// 選択肢B: 変数はA型だが中身はBなのでBのsampleが呼ばれる（オーバーライド）
+		// 選択肢B: 変数はA型だが中身はB。Aのメソッドシグネチャに合うBのsample(Collection)が呼ばれる（オーバーライド）
 		a2.sample(list); // 出力: B
-		// 選択肢C: 変数も中身もBなのでBのsampleが呼ばれる
-		b1.sample(list); // 出力: B
+		// 選択肢C: 変数も中身もB。List型引数なのでBのsample(List)が呼ばれる（オーバーロード）
+		b1.sample(list); // 出力: C
 
 	}
 
